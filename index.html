@@ -1,0 +1,3519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taytrom Blueprints</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* All existing styles remain unchanged */
+        :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --secondary-color: #e74c3c;
+            --secondary-hover: #c0392b;
+            --success-color: #2ecc71;
+            --success-hover: #27ae60;
+            --info-color: #3498db;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --input-domain: #6366f1;
+            --analytics-domain: #10b981;
+            --ai-domain: #8b5cf6;
+            --output-domain: #f59e0b;
+            --user-domain: #ec4899;
+            --state-domain: #14b8a6;
+            --lifecycle-domain: #f97316;
+            --shared-domain: #64748b;
+            --orchestration-domain: #ef4444;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #eee;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 3px 10px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+            --border-radius-lg: 10px;
+            --border-radius-pill: 20px;
+        }
+
+        /* Dark mode support with Taytrom style */
+        .dark-mode {
+            --primary-color: #6366f1;
+            --primary-hover: #818cf8;
+            --secondary-color: #f87171;
+            --secondary-hover: #ef4444;
+            --success-color: #4ade80;
+            --success-hover: #22c55e;
+            --bg-color: #1e293b;
+            --card-bg: #0f172a;
+            --text-color: #e2e8f0;
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .app-container {
+            width: 100vw;
+            height: 100vh;
+            margin: 0 auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Header with Taytrom branding */
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 12px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .taytrom-logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.6em;
+            color: var(--primary-color);
+        }
+
+        .taytrom-logo i {
+            margin-right: 8px;
+        }
+
+        .blueprints-version {
+            font-size: 0.5em;
+            opacity: 0.7;
+            margin-left: 8px;
+            vertical-align: super;
+        }
+
+        .taytrom-subtitle {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Enhanced button styles */
+        .btn {
+            padding: 8px 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9em;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-icon {
+            padding: 8px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--secondary-hover);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background-color: var(--success-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Enhanced toggle button */
+        .toggle-btn {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-btn input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: var(--border-radius);
+            padding: 5px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.8em;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Enhanced zoom controls */
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        #zoom-percentage {
+            margin: 0 5px;
+            font-weight: bold;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* Content container */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 15px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .page {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .page-header {
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comment-count-display {
+            margin-left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        /* SVG container styles */
+        .svg-container {
+            width: 100%;
+            flex-grow: 1;
+            overflow: auto;
+            position: relative;
+            cursor: move;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+
+        }
+
+        .svg-container.comment-mode {
+            cursor: crosshair;
+        }
+
+        .svg-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .svg-layer {
+            display: block;
+            height: auto;
+            transform-origin: top left;
+        }
+
+        /* Enhanced comment pins by domain */
+        .comment-pin {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 193, 7, 0.8);
+            border: 2px solid #e67e22;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .comment-pin:hover, .comment-pin.active {
+            width: 28px;
+            height: 28px;
+            background-color: rgba(255, 193, 7, 1);
+            border-color: #d35400;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Domain-specific comment pins */
+        .comment-pin.input-domain {
+            background-color: var(--input-domain);
+            border-color: rgba(99, 102, 241, 0.8);
+        }
+
+        .comment-pin.analytics-domain {
+            background-color: var(--analytics-domain);
+            border-color: rgba(16, 185, 129, 0.8);
+        }
+
+        .comment-pin.ai-domain {
+            background-color: var(--ai-domain);
+            border-color: rgba(139, 92, 246, 0.8);
+        }
+
+        .comment-pin.output-domain {
+            background-color: var(--output-domain);
+            border-color: rgba(245, 158, 11, 0.8);
+        }
+
+        .comment-pin.user-domain {
+            background-color: var(--user-domain);
+            border-color: rgba(236, 72, 153, 0.8);
+        }
+
+        .comment-pin.state-domain {
+            background-color: var(--state-domain);
+            border-color: rgba(20, 184, 166, 0.8);
+        }
+
+        .comment-pin.lifecycle-domain {
+            background-color: var(--lifecycle-domain);
+            border-color: rgba(249, 115, 22, 0.8);
+        }
+
+        .comment-pin.shared-domain {
+            background-color: var(--shared-domain);
+            border-color: rgba(100, 116, 139, 0.8);
+        }
+
+        .comment-pin.orchestration-domain {
+            background-color: var(--orchestration-domain);
+            border-color: rgba(239, 68, 68, 0.8);
+        }
+
+        .comment-pin::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Enhanced comment form */
+        .comment-form {
+            position: absolute;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            width: 350px;
+            display: none;
+        }
+
+        .comment-form.visible {
+            display: block;
+        }
+
+        .comment-form-header {
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comment-form-close {
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .comment-form-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .comment-form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-form-field {
+            flex: 1;
+        }
+
+        .comment-form-label {
+            display: block;
+            font-size: 0.85em;
+            margin-bottom: 3px;
+            font-weight: 500;
+        }
+
+        .comment-form select,
+        .comment-form input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            font-family: inherit;
+            resize: vertical;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .comment-form-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Enhanced rich text toolbar */
+        .rich-text-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .rich-text-button {
+            padding: 4px 8px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .rich-text-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Enhanced comment tooltip */
+        .comment-tooltip {
+            position: absolute;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .comment-tooltip.visible {
+            display: block;
+        }
+
+        .comment-tooltip-header {
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment-tooltip-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comment-tooltip-close {
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .comment-entry {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .comment-entry:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .comment-domain-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .comment-input-domain { background-color: var(--input-domain); }
+        .comment-analytics-domain { background-color: var(--analytics-domain); }
+        .comment-ai-domain { background-color: var(--ai-domain); }
+        .comment-output-domain { background-color: var(--output-domain); }
+        .comment-user-domain { background-color: var(--user-domain); }
+        .comment-state-domain { background-color: var(--state-domain); }
+        .comment-lifecycle-domain { background-color: var(--lifecycle-domain); }
+        .comment-shared-domain { background-color: var(--shared-domain); }
+        .comment-orchestration-domain { background-color: var(--orchestration-domain); }
+
+        .comment-type-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+
+        .comment-type-question {
+            background-color: #9fe1ff;
+            color: #0c4a6e;
+        }
+        .comment-type-issue {
+            background-color: #fecaca;
+            color: #7f1d1d;
+        }
+        .comment-type-suggestion {
+            background-color: #bef264;
+            color: #365314;
+        }
+        .comment-type-documentation {
+            background-color: #d8b4fe;
+            color: #581c87;
+        }
+
+        .comment-metadata {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
+            gap: 5px;
+        }
+
+        .comment-text {
+            margin-bottom: 8px;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+
+        .comment-text p {
+            margin-bottom: 8px;
+        }
+
+        .comment-text code {
+            background-color: var(--bg-color);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .comment-timestamp {
+            font-size: 0.8em;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .comment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        /* Constitutional validation section */
+        .constitutional-validation {
+            border-top: 1px dashed var(--border-color);
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+
+        .validation-result {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85em;
+            margin-bottom: 3px;
+        }
+
+        .validation-valid {
+            color: var(--success-color);
+        }
+
+        .validation-invalid {
+            color: var(--danger-color);
+        }
+
+        .validation-warning {
+            color: var(--warning-color);
+        }
+
+        /* TIES Message reference */
+        .ties-message-reference {
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            padding: 8px;
+            font-family: monospace;
+            font-size: 0.85em;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ties-message-reference pre {
+            overflow-x: auto;
+            max-height: 100px;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 3px 6px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+
+        /* Loading indicator */
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced shortcuts panel */
+        .shortcuts-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            padding: 20px;
+            z-index: 300;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .shortcuts-panel.visible {
+            display: block;
+        }
+
+        .shortcuts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .shortcuts-header h2 {
+            margin: 0;
+            font-size: 1.3em;
+            color: var(--primary-color);
+        }
+
+        .shortcuts-close {
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        .shortcuts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .shortcut-group {
+            margin-bottom: 15px;
+        }
+
+        .shortcut-group h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: var(--primary-color);
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .shortcut-key {
+            background-color: var(--bg-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Export dialog with Taytrom enhancements */
+        .export-dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            padding: 20px;
+            z-index: 300;
+            width: 90%;
+            max-width: 500px;
+            display: none;
+        }
+
+        .export-dialog.visible {
+            display: block;
+        }
+
+        .export-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .export-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .export-option:hover {
+            background-color: var(--bg-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .export-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .export-option-icon {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+        }
+
+        .export-option-content {
+            flex: 1;
+        }
+
+        .export-option-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .export-option-description {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .export-dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Search panel */
+        .search-panel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            width: 300px;
+            z-index: 150;
+            display: none;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .search-panel.visible {
+            display: block;
+        }
+
+        .search-header {
+            padding: 10px;
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .search-result {
+            padding: 8px;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+
+        .search-result:hover {
+            background-color: var(--bg-color);
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .search-result-path {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        /* Legend for domains */
+        .arch-legend {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 10px;
+            z-index: 150;
+            font-size: 0.85em;
+            max-width: 250px;
+            display: none;
+        }
+
+        .arch-legend.visible {
+            display: block;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-input { background-color: var(--input-domain); }
+        .legend-analytics { background-color: var(--analytics-domain); }
+        .legend-ai { background-color: var(--ai-domain); }
+        .legend-output { background-color: var(--output-domain); }
+        .legend-user { background-color: var(--user-domain); }
+        .legend-state { background-color: var(--state-domain); }
+        .legend-lifecycle { background-color: var(--lifecycle-domain); }
+        .legend-shared { background-color: var(--shared-domain); }
+        .legend-orchestration { background-color: var(--orchestration-domain); }
+
+        /* Redesigned Directional Controls */
+        .directional-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 500;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .control-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: none;
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-center {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Animation effects */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Additional animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Enhanced Taytrom tab plugin */
+        .taytrom-tabs {
+            display: flex;
+            flex-direction: column;
+            margin: 15px 0;
+        }
+
+        .taytrom-tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .taytrom-tabs-header::-webkit-scrollbar {
+            display: none;
+        }
+
+        .taytrom-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .taytrom-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .taytrom-tabs-content {
+            padding: 15px 0;
+        }
+
+        .taytrom-tab-panel {
+            display: none;
+        }
+
+        .taytrom-tab-panel.active {
+            display: block;
+        }
+
+        /* Responsive design adjustments */
+        @media (max-width: 768px) {
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .zoom-controls, .btn-group {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-top {
+                flex-direction: column;
+            }
+
+            .taytrom-logo {
+                margin-bottom: 10px;
+            }
+
+            .comment-form, .comment-tooltip {
+                width: 90%;
+                max-width: 350px;
+            }
+
+            .search-panel {
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .directional-controls {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .control-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="app-container">
+    <header>
+        <div class="header-top">
+            <div>
+                <div class="taytrom-logo">
+                    <i class="fas fa-layer-group"></i> TAYTROM BLUEPRINTS
+                    <span class="blueprints-version">v2.1</span>
+                </div>
+                <div class="taytrom-subtitle">Architecture Visualization Tool</div>
+            </div>
+            <div class="btn-group">
+                <button id="search-btn" class="btn btn-outline tooltip">
+                    <i class="fas fa-search"></i>
+                    <span class="tooltip-text">Search Components (S)</span>
+                </button>
+                <button id="export-btn" class="btn btn-outline tooltip">
+                    <i class="fas fa-download"></i>
+                    <span class="tooltip-text">Export (E)</span>
+                </button>
+                <button id="shortcuts-btn" class="btn btn-outline tooltip">
+                    <i class="fas fa-keyboard"></i>
+                    <span class="tooltip-text">Keyboard Shortcuts (?)</span>
+                </button>
+                <div class="tooltip">
+                    <label class="toggle-btn">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="tooltip-text">Toggle Dark Mode (D)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-row">
+            <div class="zoom-controls">
+                <button id="zoom-out" class="btn btn-icon tooltip">
+                    <i class="fas fa-minus"></i>
+                    <span class="tooltip-text">Zoom Out (-)</span>
+                </button>
+                <span id="zoom-percentage">500%</span>
+                <button id="zoom-in" class="btn btn-icon tooltip">
+                    <i class="fas fa-plus"></i>
+                    <span class="tooltip-text">Zoom In (+)</span>
+                </button>
+                <button id="reset-zoom" class="btn tooltip">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Reset</span>
+                    <span class="tooltip-text">Reset View (0)</span>
+                </button>
+                <button id="max-zoom" class="btn tooltip">
+                    <i class="fas fa-search-plus"></i>
+                    <span>Max</span>
+                    <span class="tooltip-text">Max Zoom (9)</span>
+                </button>
+            </div>
+            <div class="btn-group">
+                <div class="tooltip">
+                    <label class="toggle-btn">
+                        <input type="checkbox" id="comment-mode-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="tooltip-text">Comment Mode (C)</span>
+                </div>
+                <button id="clear-all-comments" class="btn btn-secondary tooltip">
+                    <i class="fas fa-trash"></i>
+                    <span>Clear Comments</span>
+                    <span class="tooltip-text">Delete All Comments</span>
+                </button>
+                <button id="show-legend" class="btn btn-outline tooltip">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Legend</span>
+                    <span class="tooltip-text">Show Domain Legend (L)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <!-- Tab navigation system -->
+        <div class="taytrom-tabs">
+            <div class="taytrom-tabs-header">
+                <div class="taytrom-tab active" data-tab="overview">Overview</div>
+                <div class="taytrom-tab" data-tab="phase1">Phase 1: Initiation</div>
+            </div>
+            <div class="taytrom-tabs-content">
+                <!-- First tab panel - Overview (existing content) -->
+                <div class="taytrom-tab-panel active" id="overview-panel">
+                    <div class="page">
+                        <div class="page-header">
+                            <h2>Architecture Overview</h2>
+                            <span class="comment-count-display">0 Comments</span>
+                        </div>
+                        <div class="svg-container">
+                            <div class="svg-wrapper">
+                                <img class="svg-layer"
+                                     src="https://www.mermaidchart.com/raw/ec922b35-b334-4d2d-af08-8e32049a6af1?theme=light&version=v0.1&format=svg" alt="Taytrom Architecture" data-dark-src="https://www.mermaidchart.com/raw/ec922b35-b334-4d2d-af08-8e32049a6af1?theme=dark&version=v0.1&format=svg">
+                                <!-- Comment pins will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second tab panel - Phase 1: Initiation (new content) -->
+                <div class="taytrom-tab-panel" id="phase1-panel">
+                    <div class="page">
+                        <div class="page-header">
+                            <h2>Phase 1: Initiation</h2>
+                            <span class="comment-count-display">0 Comments</span>
+                        </div>
+                        <div class="svg-container">
+                            <div class="svg-wrapper">
+                                <img class="svg-layer"
+                                     src="https://www.mermaidchart.com/raw/7592cf65-3a5d-4f80-aeac-cb31d3c0340a?theme=light&version=v0.1&format=svg" alt="Taytrom Phase 1" data-dark-src="https://www.mermaidchart.com/raw/7592cf65-3a5d-4f80-aeac-cb31d3c0340a?theme=dark&version=v0.1&format=svg">
+                                <!-- Comment pins will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reimagined directional controls -->
+        <div class="directional-controls" id="directional-controls">
+            <button class="control-button" id="btn-up-left" data-direction="up-left">
+                <i class="fas fa-arrow-up-left"></i>
+            </button>
+            <button class="control-button" id="btn-up" data-direction="up">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            <button class="control-button" id="btn-up-right" data-direction="up-right">
+                <i class="fas fa-arrow-up-right"></i>
+            </button>
+            <button class="control-button" id="btn-left" data-direction="left">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="control-button control-center" id="btn-center" data-direction="center">
+                <i class="fas fa-crosshairs"></i>
+            </button>
+            <button class="control-button" id="btn-right" data-direction="right">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="control-button" id="btn-down-left" data-direction="down-left">
+                <i class="fas fa-arrow-down-left"></i>
+            </button>
+            <button class="control-button" id="btn-down" data-direction="down">
+                <i class="fas fa-arrow-down"></i>
+            </button>
+            <button class="control-button" id="btn-down-right" data-direction="down-right">
+                <i class="fas fa-arrow-down-right"></i>
+            </button>
+        </div>
+
+        <!-- Enhanced comment form with domain selection and rich text -->
+        <div class="comment-form" id="comment-form">
+            <div class="comment-form-header">
+                <span>Add Comment</span>
+                <span class="comment-form-close">&times;</span>
+            </div>
+            <div class="comment-form-content">
+                <div class="comment-form-row">
+                    <div class="comment-form-field">
+                        <label class="comment-form-label">Domain</label>
+                        <select id="comment-domain">
+                            <option value="input-domain">Input</option>
+                            <option value="analytics-domain">Analytics</option>
+                            <option value="ai-domain">AI</option>
+                            <option value="output-domain">Output</option>
+                            <option value="user-domain">User</option>
+                            <option value="state-domain">State</option>
+                            <option value="lifecycle-domain">Lifecycle</option>
+                            <option value="shared-domain">Shared</option>
+                            <option value="orchestration-domain">Orchestration</option>
+                        </select>
+                    </div>
+                    <div class="comment-form-field">
+                        <label class="comment-form-label">Type</label>
+                        <select id="comment-type">
+                            <option value="question">Question</option>
+                            <option value="issue">Issue</option>
+                            <option value="suggestion">Suggestion</option>
+                            <option value="documentation">Documentation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="rich-text-toolbar">
+                    <button class="rich-text-button" data-format="bold"><i class="fas fa-bold"></i></button>
+                    <button class="rich-text-button" data-format="italic"><i class="fas fa-italic"></i></button>
+                    <button class="rich-text-button" data-format="code"><i class="fas fa-code"></i></button>
+                    <button class="rich-text-button" data-format="link"><i class="fas fa-link"></i></button>
+                    <button class="rich-text-button" data-format="diplomat">Diplomat</button>
+                    <button class="rich-text-button" data-format="ties">TIES</button>
+                </div>
+
+                <textarea placeholder="Add your comment here..." aria-label="Comment text"></textarea>
+
+                <div class="comment-form-field">
+                    <label class="comment-form-label">Constitutional Validation</label>
+                    <select id="comment-validation">
+                        <option value="none">No Constitutional Concern</option>
+                        <option value="valid">Constitutionally Valid</option>
+                        <option value="warning">Constitutional Warning</option>
+                        <option value="invalid">Constitutional Violation</option>
+                    </select>
+                </div>
+
+                <div class="comment-form-buttons">
+                    <button class="btn btn-success save-comment">Save Comment</button>
+                    <button class="btn btn-secondary cancel-comment">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced comment tooltip with more metadata -->
+        <div class="comment-tooltip" id="comment-tooltip">
+            <div class="comment-tooltip-header">
+                <div class="comment-tooltip-title">
+                    <i class="fas fa-comments"></i>
+                    <span>Comments</span>
+                </div>
+                <span class="comment-tooltip-close">&times;</span>
+            </div>
+            <!-- Comment entries will be added here dynamically -->
+        </div>
+
+        <!-- Legend for domains -->
+        <div class="arch-legend">
+            <div class="legend-title">Domain Legend</div>
+            <div class="legend-item">
+                <div class="legend-color legend-input"></div>
+                <span>Input Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-analytics"></div>
+                <span>Analytics Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-ai"></div>
+                <span>AI Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-output"></div>
+                <span>Output Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-user"></div>
+                <span>User Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-state"></div>
+                <span>State Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-lifecycle"></div>
+                <span>Lifecycle Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-shared"></div>
+                <span>Shared Domain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-orchestration"></div>
+                <span>Orchestration</span>
+            </div>
+        </div>
+
+        <!-- Search panel for architecture components -->
+        <div class="search-panel">
+            <div class="search-header">
+                <input type="text" class="search-input" placeholder="Search components...">
+                <button class="btn btn-icon search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results">
+                <!-- Search results will be populated here -->
+            </div>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <div>Loading blueprints...</div>
+        </div>
+    </div>
+
+    <!-- Enhanced keyboard shortcuts panel with Taytrom-specific shortcuts -->
+    <div class="shortcuts-panel">
+        <div class="shortcuts-header">
+            <h2>Taytrom Blueprints Keyboard Shortcuts</h2>
+            <div class="shortcuts-close">&times;</div>
+        </div>
+        <div class="shortcuts-list">
+            <div class="shortcut-group">
+                <h3>Navigation</h3>
+                <div class="shortcut-item">
+                    <span>Pan Diagram</span>
+                    <span class="shortcut-key">Click + Drag</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Toggle Search</span>
+                    <span class="shortcut-key">S</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Toggle Legend</span>
+                    <span class="shortcut-key">L</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Direction Controls</span>
+                    <span class="shortcut-key">Arrow Keys</span>
+                </div>
+            </div>
+            <div class="shortcut-group">
+                <h3>Zoom Controls</h3>
+                <div class="shortcut-item">
+                    <span>Zoom In</span>
+                    <span class="shortcut-key">+</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Zoom Out</span>
+                    <span class="shortcut-key">-</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Reset Zoom</span>
+                    <span class="shortcut-key">0</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Max Zoom</span>
+                    <span class="shortcut-key">9</span>
+                </div>
+            </div>
+            <div class="shortcut-group">
+                <h3>Comments</h3>
+                <div class="shortcut-item">
+                    <span>Toggle Comment Mode</span>
+                    <span class="shortcut-key">C</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Bold Text</span>
+                    <span class="shortcut-key">Ctrl+B</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Italic Text</span>
+                    <span class="shortcut-key">Ctrl+I</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Code Snippet</span>
+                    <span class="shortcut-key">Ctrl+`</span>
+                </div>
+            </div>
+            <div class="shortcut-group">
+                <h3>Other</h3>
+                <div class="shortcut-item">
+                    <span>Toggle Dark Mode</span>
+                    <span class="shortcut-key">D</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Export Options</span>
+                    <span class="shortcut-key">E</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Show Shortcuts</span>
+                    <span class="shortcut-key">?</span>
+                </div>
+                <div class="shortcut-item">
+                    <span>Exit Current Mode</span>
+                    <span class="shortcut-key">Esc</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced export dialog with Taytrom-specific options -->
+    <div class="export-dialog">
+        <div class="shortcuts-header">
+            <h2>Export Taytrom Blueprints</h2>
+            <div class="export-dialog-close">&times;</div>
+        </div>
+        <div class="export-options">
+            <div class="export-option selected" data-format="png">
+                <div class="export-option-icon">
+                    <i class="fas fa-file-image"></i>
+                </div>
+                <div class="export-option-content">
+                    <div class="export-option-title">PNG Image</div>
+                    <div class="export-option-description">Export as PNG image with comments</div>
+                </div>
+            </div>
+            <div class="export-option" data-format="svg">
+                <div class="export-option-icon">
+                    <i class="fas fa-file-code"></i>
+                </div>
+                <div class="export-option-content">
+                    <div class="export-option-title">SVG Vector</div>
+                    <div class="export-option-description">Export as SVG vector image for high-quality printing</div>
+                </div>
+            </div>
+            <div class="export-option" data-format="json">
+                <div class="export-option-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="export-option-content">
+                    <div class="export-option-title">Comments JSON</div>
+                    <div class="export-option-description">Export comments with metadata as JSON</div>
+                </div>
+            </div>
+            <div class="export-option" data-format="pdf">
+                <div class="export-option-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="export-option-content">
+                    <div class="export-option-title">PDF Document</div>
+                    <div class="export-option-description">Export as PDF with diagram and documentation</div>
+                </div>
+            </div>
+        </div>
+        <div class="export-dialog-buttons">
+            <button class="btn btn-secondary export-cancel">Cancel</button>
+            <button class="btn export-confirm">Export</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ---- App State ----
+        const appState = {
+            isDragging: false,
+            isCommentMode: false,
+            isFullscreen: false,
+            isDarkMode: false,
+            isSearchActive: false,
+            isLegendVisible: false,
+            activeTab: 'overview',
+            startX: 0,
+            startY: 0,
+            scrollLeftStart: 0,
+            scrollTopStart: 0,
+
+            // Store zoom and scroll state
+            zoom: 500,
+            scrollLeft: 0,
+            scrollTop: 0,
+            comments: [],
+
+            // Sample domain data
+            domains: [
+                { name: 'Input', color: 'var(--input-domain)', files: 25 },
+                { name: 'Analytics', color: 'var(--analytics-domain)', files: 42 },
+                { name: 'AI', color: 'var(--ai-domain)', files: 33 },
+                { name: 'Output', color: 'var(--output-domain)', files: 38 },
+                { name: 'User', color: 'var(--user-domain)', files: 20 },
+                { name: 'State', color: 'var(--state-domain)', files: 15 },
+                { name: 'Lifecycle', color: 'var(--lifecycle-domain)', files: 12 },
+                { name: 'Shared', color: 'var(--shared-domain)', files: 30 },
+                { name: 'Orchestration', color: 'var(--orchestration-domain)', files: 25 }
+            ],
+            translateX: 0,
+            translateY: 0,
+            startDragX: 0,
+            startDragY: 0,
+            isDragging: false,
+            isPinching: false,
+            initialPinchDistance: 0,
+            initialZoom: 500, // Default zoom
+
+
+        };
+
+        // ---- DOM Elements ----
+        const elements = {
+            container: document.querySelector('.svg-container'),
+            svgImage: document.querySelector('.svg-layer'),
+            commentModeToggle: document.getElementById('comment-mode-toggle'),
+            clearAllCommentsButton: document.getElementById('clear-all-comments'),
+            themeToggle: document.getElementById('theme-toggle'),
+            shortcutsButton: document.getElementById('shortcuts-btn'),
+            shortcutsPanel: document.querySelector('.shortcuts-panel'),
+            shortcutsClose: document.querySelector('.shortcuts-close'),
+            exportButton: document.getElementById('export-btn'),
+            exportDialog: document.querySelector('.export-dialog'),
+            exportOptions: document.querySelectorAll('.export-option'),
+            exportCancel: document.querySelector('.export-cancel'),
+            exportConfirm: document.querySelector('.export-confirm'),
+            exportDialogClose: document.querySelector('.export-dialog-close'),
+            loadingIndicator: document.querySelector('.loading-indicator'),
+            zoomPercentageElement: document.getElementById('zoom-percentage'),
+            commentForm: document.getElementById('comment-form'),
+            commentFormClose: document.querySelector('.comment-form-close'),
+            commentTooltip: document.getElementById('comment-tooltip'),
+            commentTooltipClose: document.querySelector('.comment-tooltip-close'),
+            commentCountDisplay: document.querySelector('.comment-count-display'),
+            searchButton: document.getElementById('search-btn'),
+            searchPanel: document.querySelector('.search-panel'),
+            searchInput: document.querySelector('.search-input'),
+            searchClose: document.querySelector('.search-close'),
+            searchResults: document.querySelector('.search-results'),
+            archLegend: document.querySelector('.arch-legend'),
+            showLegend: document.getElementById('show-legend'),
+            body: document.body,
+            appContainer: document.querySelector('.app-container'),
+            commentDomain: document.getElementById('comment-domain'),
+            commentType: document.getElementById('comment-type'),
+            commentValidation: document.getElementById('comment-validation'),
+            richTextButtons: document.querySelectorAll('.rich-text-button'),
+            tabs: document.querySelectorAll('.taytrom-tab'),
+            tabPanels: document.querySelectorAll('.taytrom-tab-panel'),
+            directionalControls: document.getElementById('directional-controls'),
+            controlButtons: document.querySelectorAll('.control-button')
+        };
+        const DEFAULT_ZOOM = 100; // Change this value to whatever initial zoom you prefer
+
+
+
+        // ---- Tab Functions ----
+
+        // Switch between tabs
+        function switchTab(tabId) {
+            // Update active tab in app state
+            appState.activeTab = tabId;
+
+            // Update tab buttons
+            elements.tabs.forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabId);
+            });
+
+            // Update tab panels
+            elements.tabPanels.forEach(panel => {
+                panel.classList.toggle('active', panel.id === `${tabId}-panel`);
+            });
+
+            // Update current container and SVG image
+            elements.container = document.querySelector(`#${tabId}-panel .svg-container`);
+            elements.svgImage = document.querySelector(`#${tabId}-panel .svg-layer`);
+
+            // Refresh comment pins for the current tab
+            updateCommentPinPositions();
+
+            // Update zoom for the new tab
+            initializeContainerState(appState.zoom, true);
+        }
+
+        // Register tab click handlers
+        elements.tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchTab(tab.dataset.tab);
+            });
+        });
+
+        // ---- Helper Functions ----
+
+        // Toggle fullscreen mode
+        function toggleFullscreen(element) {
+            if (!document.fullscreenElement) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+                appState.isFullscreen = true;
+                return true;
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                appState.isFullscreen = false;
+                return false;
+            }
+        }
+
+
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            appState.isDarkMode = !appState.isDarkMode;
+            elements.body.classList.toggle('dark-mode', appState.isDarkMode);
+            elements.themeToggle.checked = appState.isDarkMode;
+
+            // Update diagram image based on theme
+            const svgImages = document.querySelectorAll('.svg-layer');
+            svgImages.forEach(img => {
+                if (appState.isDarkMode && img.dataset.darkSrc) {
+                    img.setAttribute('src', img.dataset.darkSrc);
+                } else {
+                    // Reset to light theme URL
+                    const currentSrc = img.getAttribute('src');
+                    if (currentSrc.includes('theme=dark')) {
+                        img.setAttribute('src', currentSrc.replace('theme=dark', 'theme=light'));
+                    }
+                }
+            });
+
+            // Save preference to localStorage
+            localStorage.setItem('taytrom-blueprints-dark-mode', appState.isDarkMode);
+        }
+
+        // Show loading state
+        function showLoading() {
+            elements.loadingIndicator.style.display = 'flex';
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            elements.loadingIndicator.style.display = 'none';
+        }
+
+        // Format date for comment timestamps
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString(undefined, {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Generate a unique ID
+        function generateUniqueId() {
+            return 'id_' + Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+
+        // Save state to localStorage
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('taytrom-blueprints-state', JSON.stringify({
+                zoom: appState.zoom,
+                comments: appState.comments,
+                isDarkMode: appState.isDarkMode,
+                activeTab: appState.activeTab,
+                translateX: appState.translateX,
+                translateY: appState.translateY
+            }));
+        }
+// Modify the loadState function to ensure Overview is the default tab
+        // Complete loadState function implementation
+        function loadState() {
+            try {
+                const savedState = localStorage.getItem('taytrom-blueprints-state');
+                if (savedState) {
+                    const parsed = JSON.parse(savedState);
+
+                    // Load zoom with fallback to default
+                    appState.zoom = parsed.zoom || DEFAULT_ZOOM;
+
+                    // Load scroll positions
+                    if (parsed.scrollLeft) appState.scrollLeft = parsed.scrollLeft;
+                    if (parsed.scrollTop) appState.scrollTop = parsed.scrollTop;
+
+                    // Load comments if they exist
+                    if (parsed.comments) appState.comments = parsed.comments;
+
+                    // Load translation values for transform-based scrolling
+                    if (parsed.translateX !== undefined && parsed.translateY !== undefined) {
+                        appState.translateX = parsed.translateX;
+                        appState.translateY = parsed.translateY;
+
+                        setTimeout(() => {
+                            const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                            if (svgWrapper) {
+                                svgWrapper.style.transform = `translate(${appState.translateX}px, ${appState.translateY}px)`;
+                                console.log('Applied saved transform:', appState.translateX, appState.translateY);
+                            }
+                        }, 100);
+                    }                    if (parsed.translateY !== undefined) appState.translateY = parsed.translateY;
+
+                    // Always set Overview as the active tab instead of loading saved tab
+                    appState.activeTab = 'overview';
+                    switchTab('overview');
+
+                    // Apply transform if values exist
+                    if (appState.translateX !== undefined && appState.translateY !== undefined) {
+                        // Wait briefly to ensure DOM elements are ready
+                        setTimeout(() => {
+                            const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                            if (svgWrapper) {
+                                svgWrapper.style.transform = `translate(${appState.translateX}px, ${appState.translateY}px)`;
+                            }
+                        }, 50);
+                    }
+
+                    // Check for standalone dark mode preference
+                    if (parsed.isDarkMode !== undefined) {
+                        appState.isDarkMode = parsed.isDarkMode;
+                        elements.themeToggle.checked = parsed.isDarkMode;
+                        elements.body.classList.toggle('dark-mode', parsed.isDarkMode);
+
+                        // Update SVG images based on theme if necessary
+                        setTimeout(() => {
+                            const svgImages = document.querySelectorAll('.svg-layer');
+                            svgImages.forEach(img => {
+                                if (appState.isDarkMode && img.dataset.darkSrc) {
+                                    img.setAttribute('src', img.dataset.darkSrc);
+                                }
+                            });
+                        }, 50);
+                    }
+                } else {
+                    // First-time visitor - set all defaults
+                    appState.zoom = DEFAULT_ZOOM;
+                    appState.scrollLeft = 0;
+                    appState.scrollTop = 0;
+                    appState.comments = [];
+                    appState.translateX = 0;
+                    appState.translateY = 0;
+                    appState.activeTab = 'overview';
+                    switchTab('overview');
+
+                    // Check for standalone dark mode preference
+                    const darkModePref = localStorage.getItem('taytrom-blueprints-dark-mode');
+                    if (darkModePref === 'true') {
+                        appState.isDarkMode = true;
+                        elements.themeToggle.checked = true;
+                        elements.body.classList.add('dark-mode');
+
+                        // Update SVG images based on theme
+                        setTimeout(() => {
+                            const svgImages = document.querySelectorAll('.svg-layer');
+                            svgImages.forEach(img => {
+                                if (img.dataset.darkSrc) {
+                                    img.setAttribute('src', img.dataset.darkSrc);
+                                }
+                            });
+                        }, 50);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading saved state:', error);
+
+                // In case of error, set safe defaults
+                appState.zoom = DEFAULT_ZOOM;
+                appState.scrollLeft = 0;
+                appState.scrollTop = 0;
+                appState.comments = [];
+                appState.translateX = 0;
+                appState.translateY = 0;
+                appState.activeTab = 'overview';
+                switchTab('overview');
+            }
+        }
+
+        // ---- Zoom Functions ----
+// In the applyZoom() function:
+        function applyZoom(targetPercentage) {
+            const oldZoom = appState.zoom;
+            const newZoom = Math.max(100, Math.min(targetPercentage, 6000));
+
+            // Calculate the center of the container's viewport
+            const centerX = elements.container.clientWidth / 2;
+            const centerY = elements.container.clientHeight / 2;
+
+            // Calculate the point on the image at the center of the viewport
+            const imagePointX = (elements.container.scrollLeft + centerX) / (oldZoom / 100);
+            const imagePointY = (elements.container.scrollTop + centerY) / (oldZoom / 100);
+
+            // Calculate the new width based on the container's width
+            const baseWidth = elements.container.clientWidth;
+            const newWidth = (baseWidth * newZoom) / 100;
+
+            // Calculate the new height - maintaining aspect ratio but ensuring a minimum height
+            const aspectRatio = elements.svgImage.naturalHeight / elements.svgImage.naturalWidth || 0.75;
+            const newHeight = Math.max(newWidth * aspectRatio, elements.container.clientHeight * 1.5);
+
+            // Apply the new dimensions
+            elements.svgImage.style.width = newWidth + 'px';
+            elements.svgImage.style.height = newHeight + 'px'; // Set explicit height instead of 'auto'
+
+            // Update the zoom percentage and stored state
+            appState.zoom = newZoom;
+            elements.zoomPercentageElement.textContent = `${newZoom}%`;
+
+            // Recalculate scroll position to keep the center point
+            requestAnimationFrame(() => {
+                const newScrollLeft = (imagePointX * (newZoom / 100)) - centerX;
+                const newScrollTop = (imagePointY * (newZoom / 100)) - centerY;
+
+                elements.container.scrollLeft = Math.max(0, newScrollLeft);
+                elements.container.scrollTop = Math.max(0, newScrollTop);
+
+                // Update comment pin positions
+                updateCommentPinPositions();
+
+                // Save state
+                saveState();
+            });
+        }
+        // Initialize or reset zoom/scroll for a container
+        function initializeContainerState(zoomLevel = DEFAULT_ZOOM, center = true) {
+            const baseWidth = elements.container.clientWidth;
+            const initialWidth = baseWidth * (zoomLevel / 100);
+
+            elements.svgImage.style.width = initialWidth + 'px';
+            elements.svgImage.style.height = 'auto';
+
+            appState.zoom = zoomLevel;
+            elements.zoomPercentageElement.textContent = `${zoomLevel}%`;
+
+            if (center) {
+                requestAnimationFrame(() => {
+                    const initialScrollLeft = Math.max(0, (elements.container.scrollWidth - elements.container.clientWidth) / 2);
+                    const initialScrollTop = 0;
+                    elements.container.scrollLeft = initialScrollLeft;
+                    elements.container.scrollTop = initialScrollTop;
+
+                    // Store for state saving
+                    appState.scrollLeft = initialScrollLeft;
+                    appState.scrollTop = initialScrollTop;
+                });
+            } else {
+                // Use saved scroll position
+                elements.container.scrollLeft = appState.scrollLeft;
+                elements.container.scrollTop = appState.scrollTop;
+            }
+        }
+
+        // ---- Enhanced Comment Functions ----
+
+        // Create a new comment with enhanced metadata
+        function createComment(x, y, text, domain, type, validation) {
+            // Generate a unique ID for the comment
+            const commentId = generateUniqueId();
+
+            // Process rich text formatting if any
+            const processedText = text;
+
+            // Add comment to the state
+            appState.comments.push({
+                id: commentId,
+                x: x,
+                y: y,
+                text: processedText,
+                domain: domain || 'shared-domain',
+                type: type || 'question',
+                validation: validation || 'none',
+                timestamp: new Date().toISOString(),
+                user: "Current User", // In a real app, this would be the authenticated user
+                likes: 0,
+                replies: [],
+                tab: appState.activeTab // Store which tab this comment belongs to
+            });
+
+            // Create and add the comment pin to the SVG wrapper
+            addCommentPin(x, y, commentId, domain);
+
+            // Update the comment count
+            updateCommentCount();
+
+            // Save state
+            saveState();
+        }
+
+        // Add a domain-aware comment pin to the SVG
+        function addCommentPin(x, y, commentId, domain) {
+            const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+
+            // Count comments at this position (for grouping)
+            const commentsAtPosition = appState.comments.filter(c =>
+                c.tab === appState.activeTab &&
+                Math.abs(c.x - x) < 20 && Math.abs(c.y - y) < 20
+            ).length;
+
+            // Create the pin element
+            const pin = document.createElement('div');
+            pin.className = `comment-pin ${domain || 'shared-domain'}`;
+            pin.dataset.commentId = commentId;
+            pin.dataset.count = commentsAtPosition;
+            pin.style.left = `${x}px`;
+            pin.style.top = `${y}px`;
+            pin.setAttribute('aria-label', `${commentsAtPosition} comment${commentsAtPosition !== 1 ? 's' : ''}`);
+
+            // Add icon based on comment type
+            const comment = appState.comments.find(c => c.id === commentId);
+            if (comment && comment.type) {
+                let icon;
+                switch(comment.type) {
+                    case 'question':
+                        icon = 'fa-question';
+                        break;
+                    case 'issue':
+                        icon = 'fa-exclamation';
+                        break;
+                    case 'suggestion':
+                        icon = 'fa-lightbulb';
+                        break;
+                    case 'documentation':
+                        icon = 'fa-book';
+                        break;
+                    default:
+                        icon = 'fa-comment';
+                }
+                pin.innerHTML = `<i class="fas ${icon}"></i>`;
+            }
+
+            // Add click handler to show comment tooltip
+            pin.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showCommentTooltip(x, y);
+            });
+
+            svgWrapper.appendChild(pin);
+        }
+
+        // Show enhanced comment tooltip with rich formatting
+        function showCommentTooltip(x, y) {
+            // Hide any visible comment forms first
+            if (elements.commentForm.classList.contains('visible')) {
+                elements.commentForm.classList.remove('visible');
+            }
+
+            const tooltip = elements.commentTooltip;
+            const container = elements.container;
+
+            // Find all comments at or near this position for the current tab
+            const nearbyComments = appState.comments.filter(c =>
+                c.tab === appState.activeTab &&
+                Math.abs(c.x - x) < 20 && Math.abs(c.y - y) < 20
+            );
+
+            // Clear existing tooltip content
+            tooltip.innerHTML = `
+                <div class="comment-tooltip-header">
+                    <div class="comment-tooltip-title">
+                        <i class="fas fa-comments"></i>
+                        <span>${nearbyComments.length} Comment${nearbyComments.length !== 1 ? 's' : ''}</span>
+                    </div>
+                    <span class="comment-tooltip-close">&times;</span>
+                </div>
+            `;
+
+            // Get the close button and add event listener
+            const closeBtn = tooltip.querySelector('.comment-tooltip-close');
+            closeBtn.addEventListener('click', () => {
+                tooltip.classList.remove('visible', 'fade-in');
+            });
+
+            // Add each comment to the tooltip
+            nearbyComments.forEach(comment => {
+                const commentEntry = document.createElement('div');
+                commentEntry.className = 'comment-entry';
+
+                // Build the metadata section with domain and type badges
+                const commentMetadata = document.createElement('div');
+                commentMetadata.className = 'comment-metadata';
+
+                // Domain badge
+                const domainName = comment.domain.replace('-domain', '');
+                const domainBadge = document.createElement('span');
+                domainBadge.className = `comment-domain-badge comment-${comment.domain}`;
+                domainBadge.textContent = domainName.charAt(0).toUpperCase() + domainName.slice(1);
+                commentMetadata.appendChild(domainBadge);
+
+                // Type badge
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `comment-type-badge comment-type-${comment.type}`;
+                typeBadge.textContent = comment.type.charAt(0).toUpperCase() + comment.type.slice(1);
+                commentMetadata.appendChild(typeBadge);
+
+                // Timestamp
+                const commentTimestamp = document.createElement('div');
+                commentTimestamp.className = 'comment-timestamp';
+                commentTimestamp.textContent = formatDate(comment.timestamp);
+                commentMetadata.appendChild(commentTimestamp);
+
+                // Build the text content with any rich formatting
+                const commentText = document.createElement('div');
+                commentText.className = 'comment-text';
+                commentText.innerHTML = formatCommentText(comment.text);
+
+                // Add constitutional validation section if present
+                let validationSection = '';
+                if (comment.validation && comment.validation !== 'none') {
+                    let validationClass, validationIcon, validationText;
+
+                    switch(comment.validation) {
+                        case 'valid':
+                            validationClass = 'validation-valid';
+                            validationIcon = 'fa-check-circle';
+                            validationText = 'Constitutionally Valid';
+                            break;
+                        case 'warning':
+                            validationClass = 'validation-warning';
+                            validationIcon = 'fa-exclamation-triangle';
+                            validationText = 'Constitutional Warning';
+                            break;
+                        case 'invalid':
+                            validationClass = 'validation-invalid';
+                            validationIcon = 'fa-times-circle';
+                            validationText = 'Constitutional Violation';
+                            break;
+                    }
+
+                    validationSection = `
+                        <div class="constitutional-validation">
+                            <div class="validation-result ${validationClass}">
+                                <i class="fas ${validationIcon}"></i>
+                                <span>${validationText}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Add TIES message example if this is a comment about messaging
+                let tiesSection = '';
+                if (comment.text.toLowerCase().includes('ties') ||
+                    comment.text.toLowerCase().includes('message') ||
+                    comment.text.toLowerCase().includes('diplomat')) {
+                    const sampleTIES = {
+                        "raw": {
+                            "required": {
+                                "id": "msg_" + generateUniqueId(),
+                                "enum": "DOCUMENT_ANALYSIS_REQUEST",
+                                "source": `${domainName.toUpperCase()}_DIPLOMAT`,
+                                "target": "FRONT_AUTOCRAT"
+                            },
+                            "ad_hoc": {
+                                "message": {
+                                    "content": { /* Payload */ },
+                                    "metadata": {
+                                        "timestamp": Date.now(),
+                                        "priority": "NORMAL"
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    tiesSection = `
+                        <div class="ties-message-reference">
+                            <pre>${JSON.stringify(sampleTIES, null, 2)}</pre>
+                            <button class="copy-button">Copy</button>
+                        </div>
+                    `;
+                }
+
+                // Build the actions section
+                const commentActions = document.createElement('div');
+                commentActions.className = 'comment-actions';
+
+                const replyButton = document.createElement('button');
+                replyButton.className = 'btn btn-outline';
+                replyButton.innerHTML = '<i class="fas fa-reply"></i>';
+                replyButton.setAttribute('aria-label', 'Reply to comment');
+                replyButton.addEventListener('click', () => {
+                    // Show reply form (in a real app)
+                    alert('Reply feature would open here');
+                });
+
+                const editButton = document.createElement('button');
+                editButton.className = 'btn';
+                editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                editButton.setAttribute('aria-label', 'Edit comment');
+                editButton.addEventListener('click', () => {
+                    // Hide tooltip and show edit form
+                    tooltip.classList.remove('visible');
+                    showEditCommentForm(comment.id, comment.x, comment.y, comment.text, comment.domain, comment.type, comment.validation);
+                });
+
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-secondary';
+                deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteButton.setAttribute('aria-label', 'Delete comment');
+                deleteButton.addEventListener('click', () => {
+                    deleteComment(comment.id);
+
+                    // If this was the last comment at this position, hide tooltip
+                    if (nearbyComments.length <= 1) {
+                        tooltip.classList.remove('visible');
+                    } else {
+                        // Otherwise refresh the tooltip
+                        showCommentTooltip(x, y);
+                    }
+                });
+
+                commentActions.appendChild(replyButton);
+                commentActions.appendChild(editButton);
+                commentActions.appendChild(deleteButton);
+
+                // Assemble all sections
+                commentEntry.appendChild(commentMetadata);
+                commentEntry.appendChild(commentText);
+                if (validationSection) {
+                    const validationDiv = document.createElement('div');
+                    validationDiv.innerHTML = validationSection;
+                    commentEntry.appendChild(validationDiv);
+                }
+                if (tiesSection) {
+                    const tiesDiv = document.createElement('div');
+                    tiesDiv.innerHTML = tiesSection;
+                    commentEntry.appendChild(tiesDiv);
+
+                    // Add copy functionality
+                    const copyBtn = tiesDiv.querySelector('.copy-button');
+                    if (copyBtn) {
+                        copyBtn.addEventListener('click', () => {
+                            const preElement = tiesDiv.querySelector('pre');
+                            if (preElement) {
+                                navigator.clipboard.writeText(preElement.textContent);
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    copyBtn.textContent = 'Copy';
+                                }, 2000);
+                            }
+                        });
+                    }
+                }
+                commentEntry.appendChild(commentActions);
+                tooltip.appendChild(commentEntry);
+            });
+
+            // Position the tooltip near the pin but ensure it's visible
+            let tooltipX = x + 20; // 20px to the right of the pin
+            let tooltipY = y;
+
+            // Adjust if too close to edge
+            if (tooltipX + 350 > container.scrollLeft + container.clientWidth) {
+                tooltipX = x - 370; // Position to the left if too close to right edge
+            }
+
+            // Position tooltip
+            tooltip.style.left = `${tooltipX}px`;
+            tooltip.style.top = `${tooltipY}px`;
+
+            // Make tooltip visible with fade-in effect
+            tooltip.classList.add('visible', 'fade-in');
+
+            // Add click handler to the container to close tooltip when clicking elsewhere
+            function closeTooltipOnClickOutside(e) {
+                if (!tooltip.contains(e.target) && !e.target.classList.contains('comment-pin')) {
+                    tooltip.classList.remove('visible', 'fade-in');
+                    container.removeEventListener('click', closeTooltipOnClickOutside);
+                }
+            }
+
+            // Set timeout to add the listener (prevent immediate closing)
+            setTimeout(() => {
+                container.addEventListener('click', closeTooltipOnClickOutside);
+            }, 10);
+        }
+
+        // Format comment text with rich formatting
+        function formatCommentText(text) {
+            if (!text) return '';
+
+            // Replace **bold** with <strong>bold</strong>
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Replace _italic_ with <em>italic</em>
+            text = text.replace(/_(.*?)_/g, '<em>$1</em>');
+
+            // Replace `code` with <code>code</code>
+            text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+
+            // Replace [link](url) with <a href="url">link</a>
+            text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+            // Replace newlines with <br>
+            text = text.replace(/\n/g, '<br>');
+
+            // Custom Taytrom-specific formatting
+            text = text.replace(/\{diplomat:(.*?)\}/g, '<span style="color:var(--orchestration-domain);font-weight:600;">$1Diplomat</span>');
+            text = text.replace(/\{ties:(.*?)\}/g, '<span style="color:var(--primary-color);font-weight:600;">TIES:$1</span>');
+
+            return text;
+        }
+
+        // Delete a comment
+        function deleteComment(commentId) {
+            // Find comment index
+            const commentIndex = appState.comments.findIndex(c => c.id === commentId);
+
+            if (commentIndex > -1) {
+                // Get comment position before removing it
+                const comment = appState.comments[commentIndex];
+                const x = comment.x;
+                const y = comment.y;
+                const tab = comment.tab;
+
+                // Remove comment from state
+                appState.comments.splice(commentIndex, 1);
+
+                // Remove the comment pin if this was the last comment at this position for this tab
+                const remainingCommentsAtPosition = appState.comments.filter(c =>
+                    c.tab === tab &&
+                    Math.abs(c.x - x) < 20 && Math.abs(c.y - y) < 20
+                );
+
+                const pin = document.querySelector(`#${tab}-panel .comment-pin[data-comment-id="${commentId}"]`);
+
+                if (remainingCommentsAtPosition.length === 0 && pin) {
+                    pin.remove();
+                } else if (pin) {
+                    // Update the count on the pin
+                    pin.dataset.count = remainingCommentsAtPosition.length;
+                    pin.setAttribute('aria-label', `${remainingCommentsAtPosition.length} comment${remainingCommentsAtPosition.length !== 1 ? 's' : ''}`);
+                }
+
+                // Update comment count
+                updateCommentCount();
+
+                // Save state
+                saveState();
+            }
+        }
+
+        // Show form to add a new comment with rich text and domain categorization
+        function showCommentForm(x, y) {
+            const form = elements.commentForm;
+            const textarea = form.querySelector('textarea');
+            const saveButton = form.querySelector('.save-comment');
+            const cancelButton = form.querySelector('.cancel-comment');
+            const container = elements.container;
+
+            // Clear any previous text
+            textarea.value = '';
+
+            // Position the form near the click position
+            let formX = x + 20; // 20px to the right of the click
+            let formY = y;
+
+            // Adjust if too close to edge
+            if (formX + 350 > container.scrollLeft + container.clientWidth) {
+                formX = x - 370; // Position to the left if too close to right edge
+            }
+
+            // Position form
+            form.style.left = `${formX}px`;
+            form.style.top = `${formY}px`;
+
+            // Reset domain and type to defaults
+            elements.commentDomain.value = 'shared-domain';
+            elements.commentType.value = 'question';
+            elements.commentValidation.value = 'none';
+
+            // Store click position for later use
+            form.dataset.x = x;
+            form.dataset.y = y;
+
+            // Make form visible with fade-in effect
+            form.classList.add('visible', 'fade-in');
+
+            // Focus the textarea
+            textarea.focus();
+
+            // Set up save button handler
+            saveButton.onclick = () => {
+                const commentText = textarea.value.trim();
+                if (commentText) {
+                    createComment(
+                        x,
+                        y,
+                        commentText,
+                        elements.commentDomain.value,
+                        elements.commentType.value,
+                        elements.commentValidation.value
+                    );
+                    form.classList.remove('visible', 'fade-in');
+                } else {
+                    alert('Please enter a comment before saving.');
+                }
+            };
+
+            // Set up cancel button handler
+            cancelButton.onclick = () => {
+                form.classList.remove('visible', 'fade-in');
+            };
+
+            // Add rich text button handlers
+            elements.richTextButtons.forEach(button => {
+                button.onclick = () => {
+                    const format = button.dataset.format;
+                    const selectionStart = textarea.selectionStart;
+                    const selectionEnd = textarea.selectionEnd;
+                    const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+
+                    let replacement = '';
+                    switch(format) {
+                        case 'bold':
+                            replacement = `**${selectedText}**`;
+                            break;
+                        case 'italic':
+                            replacement = `_${selectedText}_`;
+                            break;
+                        case 'code':
+                            replacement = `\`${selectedText}\``;
+                            break;
+                        case 'link':
+                            replacement = `[${selectedText}](url)`;
+                            break;
+                        case 'diplomat':
+                            replacement = `{diplomat:${selectedText || 'Domain'}}`;
+                            break;
+                        case 'ties':
+                            replacement = `{ties:${selectedText || 'MESSAGE_TYPE'}}`;
+                            break;
+                    }
+
+                    textarea.value =
+                        textarea.value.substring(0, selectionStart) +
+                        replacement +
+                        textarea.value.substring(selectionEnd);
+
+                    // Set cursor position
+                    if (selectedText) {
+                        textarea.selectionStart = selectionStart;
+                        textarea.selectionEnd = selectionStart + replacement.length;
+                    } else {
+                        // For empty selection, position cursor appropriately
+                        if (format === 'link') {
+                            // Position cursor at "url"
+                            textarea.selectionStart = selectionStart + replacement.length - 4;
+                            textarea.selectionEnd = selectionStart + replacement.length - 1;
+                        } else if (format === 'diplomat') {
+                            // Position cursor at "Domain"
+                            textarea.selectionStart = selectionStart + 10;
+                            textarea.selectionEnd = selectionStart + 16;
+                        } else if (format === 'ties') {
+                            // Position cursor at "MESSAGE_TYPE"
+                            textarea.selectionStart = selectionStart + 6;
+                            textarea.selectionEnd = selectionStart + 17;
+                        } else {
+                            // For bold, italic, code - position between markers
+                            textarea.selectionStart = selectionStart + Math.floor(replacement.length / 2);
+                            textarea.selectionEnd = textarea.selectionStart;
+                        }
+                    }
+
+                    textarea.focus();
+                };
+            });
+
+            // Handle Enter key in textarea
+            textarea.onkeydown = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    saveButton.click();
+                }
+                // Ctrl+B for bold
+                else if (e.key === 'b' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="bold"]').click();
+                }
+                // Ctrl+I for italic
+                else if (e.key === 'i' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="italic"]').click();
+                }
+                // Ctrl+K for link
+                else if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="link"]').click();
+                }
+                // Ctrl+` for code
+                else if (e.key === '`' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="code"]').click();
+                }
+            };
+        }
+
+        // Show form to edit an existing comment
+        function showEditCommentForm(commentId, x, y, text, domain, type, validation) {
+            const form = elements.commentForm;
+            const textarea = form.querySelector('textarea');
+            const saveButton = form.querySelector('.save-comment');
+            const cancelButton = form.querySelector('.cancel-comment');
+
+            // Update form header to show we're editing
+            form.querySelector('.comment-form-header span').textContent = 'Edit Comment';
+
+            // Fill with existing text and metadata
+            textarea.value = text;
+            elements.commentDomain.value = domain || 'shared-domain';
+            elements.commentType.value = type || 'question';
+            elements.commentValidation.value = validation || 'none';
+
+            // Position the form near the comment
+            let formX = x + 20;
+            let formY = y;
+
+            // Adjust if too close to edge
+            const container = elements.container;
+            if (formX + 350 > container.scrollLeft + container.clientWidth) {
+                formX = x - 370; // Position to the left if too close to right edge
+            }
+
+            form.style.left = `${formX}px`;
+            form.style.top = `${formY}px`;
+
+            // Make form visible with fade-in effect
+            form.classList.add('visible', 'fade-in');
+
+            // Focus the textarea and place cursor at end
+            textarea.focus();
+            textarea.setSelectionRange(text.length, text.length);
+
+            // Set up save button handler for editing
+            saveButton.onclick = () => {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    // Find comment and update text and metadata
+                    const commentIndex = appState.comments.findIndex(c => c.id === commentId);
+                    if (commentIndex > -1) {
+                        appState.comments[commentIndex].text = newText;
+                        appState.comments[commentIndex].domain = elements.commentDomain.value;
+                        appState.comments[commentIndex].type = elements.commentType.value;
+                        appState.comments[commentIndex].validation = elements.commentValidation.value;
+                        // Update timestamp
+                        appState.comments[commentIndex].timestamp = new Date().toISOString();
+
+                        // Update pin appearance if domain changed
+                        const pin = document.querySelector(`#${appState.activeTab}-panel .comment-pin[data-comment-id="${commentId}"]`);
+                        if (pin) {
+                            // Remove all domain classes
+                            pin.classList.forEach(cls => {
+                                if (cls.endsWith('-domain')) {
+                                    pin.classList.remove(cls);
+                                }
+                            });
+                            // Add new domain class
+                            pin.classList.add(elements.commentDomain.value);
+
+                            // Update icon based on type
+                            let icon;
+                            switch(elements.commentType.value) {
+                                case 'question':
+                                    icon = 'fa-question';
+                                    break;
+                                case 'issue':
+                                    icon = 'fa-exclamation';
+                                    break;
+                                case 'suggestion':
+                                    icon = 'fa-lightbulb';
+                                    break;
+                                case 'documentation':
+                                    icon = 'fa-book';
+                                    break;
+                                default:
+                                    icon = 'fa-comment';
+                            }
+                            pin.innerHTML = `<i class="fas ${icon}"></i>`;
+                        }
+
+                        saveState();
+                    }
+                    form.classList.remove('visible', 'fade-in');
+
+                    // Reset form header
+                    setTimeout(() => {
+                        form.querySelector('.comment-form-header span').textContent = 'Add Comment';
+                    }, 300);
+                } else {
+                    alert('Please enter a comment before saving.');
+                }
+            };
+
+            // Set up cancel button handler
+            cancelButton.onclick = () => {
+                form.classList.remove('visible', 'fade-in');
+                // Reset form header
+                setTimeout(() => {
+                    form.querySelector('.comment-form-header span').textContent = 'Add Comment';
+                }, 300);
+            };
+
+            // Add rich text button handlers (same as showCommentForm)
+            elements.richTextButtons.forEach(button => {
+                button.onclick = () => {
+                    const format = button.dataset.format;
+                    const selectionStart = textarea.selectionStart;
+                    const selectionEnd = textarea.selectionEnd;
+                    const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+
+                    let replacement = '';
+                    switch(format) {
+                        case 'bold':
+                            replacement = `**${selectedText}**`;
+                            break;
+                        case 'italic':
+                            replacement = `_${selectedText}_`;
+                            break;
+                        case 'code':
+                            replacement = `\`${selectedText}\``;
+                            break;
+                        case 'link':
+                            replacement = `[${selectedText}](url)`;
+                            break;
+                        case 'diplomat':
+                            replacement = `{diplomat:${selectedText || 'Domain'}}`;
+                            break;
+                        case 'ties':
+                            replacement = `{ties:${selectedText || 'MESSAGE_TYPE'}}`;
+                            break;
+                    }
+
+                    textarea.value =
+                        textarea.value.substring(0, selectionStart) +
+                        replacement +
+                        textarea.value.substring(selectionEnd);
+
+                    // Set cursor position
+                    if (selectedText) {
+                        textarea.selectionStart = selectionStart;
+                        textarea.selectionEnd = selectionStart + replacement.length;
+                    } else {
+                        // For empty selection, position cursor appropriately
+                        if (format === 'link') {
+                            // Position cursor at "url"
+                            textarea.selectionStart = selectionStart + replacement.length - 4;
+                            textarea.selectionEnd = selectionStart + replacement.length - 1;
+                        } else if (format === 'diplomat') {
+                            // Position cursor at "Domain"
+                            textarea.selectionStart = selectionStart + 10;
+                            textarea.selectionEnd = selectionStart + 16;
+                        } else if (format === 'ties') {
+                            // Position cursor at "MESSAGE_TYPE"
+                            textarea.selectionStart = selectionStart + 6;
+                            textarea.selectionEnd = selectionStart + 17;
+                        } else {
+                            // For bold, italic, code - position between markers
+                            textarea.selectionStart = selectionStart + Math.floor(replacement.length / 2);
+                            textarea.selectionEnd = textarea.selectionStart;
+                        }
+                    }
+
+                    textarea.focus();
+                };
+            });
+
+            // Handle keyboard shortcuts in textarea
+            textarea.onkeydown = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    saveButton.click();
+                }
+                // Ctrl+B for bold
+                else if (e.key === 'b' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="bold"]').click();
+                }
+                // Ctrl+I for italic
+                else if (e.key === 'i' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="italic"]').click();
+                }
+                // Ctrl+K for link
+                else if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="link"]').click();
+                }
+                // Ctrl+` for code
+                else if (e.key === '`' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    document.querySelector('.rich-text-button[data-format="code"]').click();
+                }
+            };
+        }
+
+        // Update comment count display
+        function updateCommentCount() {
+            // Count comments for the current tab
+            const commentCount = appState.comments.filter(c => c.tab === appState.activeTab).length;
+            const commentCountDisplay = document.querySelector(`#${appState.activeTab}-panel .comment-count-display`);
+            if (commentCountDisplay) {
+                commentCountDisplay.textContent = `${commentCount} Comment${commentCount !== 1 ? 's' : ''}`;
+            }
+        }
+
+        // Update comment pin positions after scrolling/zooming
+        function updateCommentPinPositions() {
+            // Remove existing pins for the current tab
+            const existingPins = document.querySelectorAll(`#${appState.activeTab}-panel .comment-pin`);
+            existingPins.forEach(pin => pin.remove());
+
+            // Group comments by position (within 20px) for the current tab
+            const positionGroups = {};
+
+            appState.comments.filter(c => c.tab === appState.activeTab).forEach(comment => {
+                let foundGroup = false;
+
+                // Check if this comment belongs to an existing group
+                Object.keys(positionGroups).forEach(groupKey => {
+                    const group = positionGroups[groupKey];
+                    if (Math.abs(group.x - comment.x) < 20 && Math.abs(group.y - comment.y) < 20) {
+                        group.comments.push(comment);
+                        foundGroup = true;
+                    }
+                });
+
+                // If not found in any existing group, create a new one
+                if (!foundGroup) {
+                    const groupKey = `group_${generateUniqueId()}`;
+                    positionGroups[groupKey] = {
+                        x: comment.x,
+                        y: comment.y,
+                        comments: [comment]
+                    };
+                }
+            });
+
+            // Add pins for each group in the current tab
+            Object.values(positionGroups).forEach(group => {
+                if (group.comments.length > 0) {
+                    // Use the first comment for the pin, but count all comments in the group
+                    addCommentPin(group.x, group.y, group.comments[0].id, group.comments[0].domain);
+                }
+            });
+        }
+
+        // ---- Reimagined Directional Controls ----
+        function setupDirectionalControls() {
+            // Define movement amounts
+            const regularStep = 80; // Standard movement amount
+            const diagonalStep = 56; // Diagonal movement (about 70% of standard)
+
+            // Direction map for standard moves
+            const directions = {
+                'up': { x: 0, y: -regularStep },
+                'down': { x: 0, y: regularStep },
+                'left': { x: -regularStep, y: 0 },
+                'right': { x: regularStep, y: 0 },
+                'up-left': { x: -diagonalStep, y: -diagonalStep },
+                'up-right': { x: diagonalStep, y: -diagonalStep },
+                'down-left': { x: -diagonalStep, y: diagonalStep },
+                'down-right': { x: diagonalStep, y: diagonalStep },
+                'center': null // Special case for centering
+            };
+
+            // Helper function to safely get the active container
+            function getActiveContainer() {
+                return document.querySelector(`#${appState.activeTab}-panel .svg-container`);
+            }
+// ALTERNATIVE approach - transform the SVG directly
+            function scrollDiagram(direction) {
+                try {
+                    // Exit early if this is the center button
+                    if (direction === 'center') {
+                        // Reset position
+                        const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                        svgWrapper.style.transform = 'translate(0px, 0px)';
+                        appState.translateX = 0;
+                        appState.translateY = 0;
+                        saveState();
+                        return;
+                    }
+
+                    const movement = directions[direction];
+                    if (!movement) return;
+
+                    // Initialize translation values if not set
+                    if (appState.translateX === undefined) appState.translateX = 0;
+                    if (appState.translateY === undefined) appState.translateY = 0;
+
+                    // Update translation values
+                    appState.translateX -= movement.x;
+                    appState.translateY -= movement.y;
+
+                    // Apply transform
+                    const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                    svgWrapper.style.transform = `translate(${appState.translateX}px, ${appState.translateY}px)`;
+
+                    // Save state
+                    saveState();
+                } catch (error) {
+                    console.error('Error scrolling diagram:', error);
+                }
+            }
+            // Add click handlers for all control buttons
+            document.querySelectorAll('.control-button').forEach(button => {
+                const direction = button.dataset.direction;
+                if (!direction) return;
+
+                // Single click handling
+                button.addEventListener('click', () => {
+                    scrollDiagram(direction);
+                });
+
+                // Continuous scrolling on press and hold
+                let scrollInterval = null;
+                let isHolding = false;
+
+                // Start scrolling on mousedown
+                button.addEventListener('mousedown', () => {
+                    // Don't do continuous scrolling for center button
+                    if (direction === 'center') return;
+
+                    isHolding = true;
+                    // Small delay before starting continuous movement
+                    setTimeout(() => {
+                        if (!isHolding) return;
+
+                        // Set smaller step size for smooth continuous scrolling
+                        const movement = directions[direction];
+                        const continuousX = movement ? Math.sign(movement.x) * 10 : 0;
+                        const continuousY = movement ? Math.sign(movement.y) * 10 : 0;
+
+                        scrollInterval = setInterval(() => {
+                            const container = getActiveContainer();
+                            if (!container) return;
+
+                            container.scrollLeft += continuousX;
+                            container.scrollTop += continuousY;
+
+                            // Update state
+                            appState.scrollLeft = container.scrollLeft;
+                            appState.scrollTop = container.scrollTop;
+                        }, 16); // ~60fps for smooth scrolling
+                    }, 250); // Start continuous after 250ms
+                });
+
+                // Clear interval when mouse is released or leaves button
+                const stopScrolling = () => {
+                    isHolding = false;
+                    if (scrollInterval) {
+                        clearInterval(scrollInterval);
+                        scrollInterval = null;
+                        // Save final position on stop
+                        saveState();
+                    }
+                };
+
+                button.addEventListener('mouseup', stopScrolling);
+                button.addEventListener('mouseleave', stopScrolling);
+                button.addEventListener('touchend', stopScrolling);
+                button.addEventListener('touchcancel', stopScrolling);
+            });
+
+            // Add keyboard support for arrow keys
+            const keyDirectionMap = {
+                'ArrowUp': 'up',
+                'ArrowDown': 'down',
+                'ArrowLeft': 'left',
+                'ArrowRight': 'right'
+            };
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                // Skip if we're in an input element
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                // Check if this is a direction key
+                const direction = keyDirectionMap[e.key];
+                if (!direction) return;
+
+                // Prevent default behavior (page scrolling)
+                e.preventDefault();
+
+                // Execute the scroll
+                scrollDiagram(direction);
+            });
+        }
+
+        // Toggle domain legend
+        function toggleLegend() {
+            appState.isLegendVisible = !appState.isLegendVisible;
+            elements.archLegend.classList.toggle('visible', appState.isLegendVisible);
+            elements.showLegend.classList.toggle('btn-secondary', appState.isLegendVisible);
+        }
+
+        // ---- Search Functions ----
+
+        // Toggle search panel
+        function toggleSearch() {
+            appState.isSearchActive = !appState.isSearchActive;
+            elements.searchPanel.classList.toggle('visible', appState.isSearchActive);
+            elements.searchButton.classList.toggle('btn-secondary', appState.isSearchActive);
+
+            if (appState.isSearchActive) {
+                elements.searchInput.focus();
+                populateSearchResults();
+            }
+        }
+
+        // Populate search results
+        function populateSearchResults() {
+            const results = elements.searchResults;
+            results.innerHTML = '';
+
+            // Sample search results based on domain data
+            appState.domains.forEach(domain => {
+                const result = document.createElement('div');
+                result.className = 'search-result';
+                result.innerHTML = `
+                    <div class="search-result-title">${domain.name} Domain</div>
+                    <div class="search-result-path">${domain.files} files</div>
+                `;
+
+                result.addEventListener('click', () => {
+                    // Simulate jumping to the domain section
+                    alert(`Would navigate to ${domain.name} domain section`);
+                    toggleSearch();
+                });
+
+                results.appendChild(result);
+            });
+
+            // Add tab-specific search results
+            if (appState.activeTab === 'overview') {
+                const architectureResult = document.createElement('div');
+                architectureResult.className = 'search-result';
+                architectureResult.innerHTML = `
+                    <div class="search-result-title">Architecture Overview</div>
+                    <div class="search-result-path">Main blueprint</div>
+                `;
+                results.appendChild(architectureResult);
+            } else if (appState.activeTab === 'phase1') {
+                const phase1Result = document.createElement('div');
+                phase1Result.className = 'search-result';
+                phase1Result.innerHTML = `
+                    <div class="search-result-title">Phase 1: Initiation</div>
+                    <div class="search-result-path">Initiation blueprint</div>
+                `;
+                results.appendChild(phase1Result);
+            }
+        }
+
+        // ---- Event Listeners ----
+        function setupContainerListeners() {
+            const containers = document.querySelectorAll('.svg-container');
+            containers.forEach(container => {
+                // Get the SVG wrapper for this container
+                const svgWrapper = container.querySelector('.svg-wrapper');
+
+                // --- MOUSE EVENTS (existing code) ---
+                container.addEventListener('mousedown', function(e) {
+                    if (appState.isCommentMode || e.target.classList.contains('comment-pin')) {
+                        return;
+                    }
+
+                    appState.isDragging = true;
+                    appState.startDragX = e.clientX;
+                    appState.startDragY = e.clientY;
+
+                    let currentTransform = svgWrapper.style.transform || 'translate(0px, 0px)';
+                    let translateMatch = currentTransform.match(/translate\((-?\d+)px,\s*(-?\d+)px\)/);
+
+                    if (translateMatch) {
+                        appState.translateX = parseInt(translateMatch[1]) || 0;
+                        appState.translateY = parseInt(translateMatch[2]) || 0;
+                    } else {
+                        appState.translateX = 0;
+                        appState.translateY = 0;
+                    }
+
+                    container.style.cursor = 'grabbing';
+                });
+
+                // --- TOUCH EVENTS (new code) ---
+                container.addEventListener('touchstart', function(e) {
+                    // Skip if in comment mode or touched a pin
+                    if (appState.isCommentMode || e.target.classList.contains('comment-pin')) {
+                        return;
+                    }
+
+                    // Prevent default to avoid scrolling the page
+                    e.preventDefault();
+
+                    // Handle single touch for dragging
+                    if (e.touches.length === 1) {
+                        const touch = e.touches[0];
+
+                        appState.isDragging = true;
+                        appState.startDragX = touch.clientX;
+                        appState.startDragY = touch.clientY;
+
+                        let currentTransform = svgWrapper.style.transform || 'translate(0px, 0px)';
+                        let translateMatch = currentTransform.match(/translate\((-?\d+)px,\s*(-?\d+)px\)/);
+
+                        if (translateMatch) {
+                            appState.translateX = parseInt(translateMatch[1]) || 0;
+                            appState.translateY = parseInt(translateMatch[2]) || 0;
+                        } else {
+                            appState.translateX = 0;
+                            appState.translateY = 0;
+                        }
+                    }
+
+                    // Handle pinch-to-zoom with two fingers
+                    if (e.touches.length === 2) {
+                        appState.isPinching = true;
+                        appState.initialPinchDistance = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        appState.initialZoom = appState.zoom;
+                    }
+                });
+
+                // Container click for adding comments (unchanged)
+                container.addEventListener('click', function(e) {
+                    if (!appState.isCommentMode) return;
+                    if (e.target.classList.contains('comment-pin')) return;
+
+                    const rect = this.querySelector('.svg-wrapper').getBoundingClientRect();
+                    const x = e.clientX - rect.left + this.scrollLeft;
+                    const y = e.clientY - rect.top + this.scrollTop;
+
+                    showCommentForm(x, y);
+                });
+
+                // Touch version of click for comments
+                container.addEventListener('touchend', function(e) {
+                    // Only process if it was a tap (not a drag end)
+                    if (!appState.isDragging && !appState.isPinching && appState.isCommentMode) {
+                        if (e.target.classList.contains('comment-pin')) return;
+
+                        const touch = e.changedTouches[0];
+                        const rect = this.querySelector('.svg-wrapper').getBoundingClientRect();
+                        const x = touch.clientX - rect.left + this.scrollLeft;
+                        const y = touch.clientY - rect.top + this.scrollTop;
+
+                        showCommentForm(x, y);
+                    }
+                });
+            });
+
+            // --- GLOBAL MOUSE EVENTS (existing) ---
+            document.addEventListener('mousemove', function(e) {
+                if (!appState.isDragging) return;
+
+                const dx = e.clientX - appState.startDragX;
+                const dy = e.clientY - appState.startDragY;
+
+                const newX = appState.translateX + dx;
+                const newY = appState.translateY + dy;
+
+                const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                if (svgWrapper) {
+                    svgWrapper.style.transform = `translate(${newX}px, ${newY}px)`;
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (!appState.isDragging) return;
+
+                const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                if (svgWrapper) {
+                    let finalTransform = svgWrapper.style.transform || 'translate(0px, 0px)';
+                    let translateMatch = finalTransform.match(/translate\((-?\d+)px,\s*(-?\d+)px\)/);
+
+                    if (translateMatch) {
+                        appState.translateX = parseInt(translateMatch[1]) || 0;
+                        appState.translateY = parseInt(translateMatch[2]) || 0;
+                    }
+                }
+
+                appState.isDragging = false;
+
+                const container = document.querySelector(`#${appState.activeTab}-panel .svg-container`);
+                if (container) {
+                    container.style.cursor = appState.isCommentMode ? 'crosshair' : 'move';
+                }
+
+                saveState();
+            });
+
+            // --- GLOBAL TOUCH EVENTS (new) ---
+            document.addEventListener('touchmove', function(e) {
+                // Handle dragging with single finger
+                if (appState.isDragging && e.touches.length === 1) {
+                    e.preventDefault(); // Prevent page scrolling
+
+                    const touch = e.touches[0];
+                    const dx = touch.clientX - appState.startDragX;
+                    const dy = touch.clientY - appState.startDragY;
+
+                    const newX = appState.translateX + dx;
+                    const newY = appState.translateY + dy;
+
+                    const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                    if (svgWrapper) {
+                        svgWrapper.style.transform = `translate(${newX}px, ${newY}px)`;
+                    }
+                }
+
+                // Handle pinch-to-zoom with two fingers
+                if (appState.isPinching && e.touches.length === 2) {
+                    e.preventDefault(); // Prevent page zooming
+
+                    // Calculate new distance between fingers
+                    const currentDistance = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+
+                    // Calculate zoom change factor
+                    const scaleFactor = currentDistance / appState.initialPinchDistance;
+                    const newZoom = Math.max(100, Math.min(appState.initialZoom * scaleFactor, 6000));
+
+                    // Apply the new zoom
+                    applyZoom(newZoom);
+                }
+            }, { passive: false }); // Important for preventing default touch behavior
+
+            document.addEventListener('touchend', function(e) {
+                // Update final position if was dragging
+                if (appState.isDragging) {
+                    const svgWrapper = document.querySelector(`#${appState.activeTab}-panel .svg-wrapper`);
+                    if (svgWrapper) {
+                        let finalTransform = svgWrapper.style.transform || 'translate(0px, 0px)';
+                        let translateMatch = finalTransform.match(/translate\((-?\d+)px,\s*(-?\d+)px\)/);
+
+                        if (translateMatch) {
+                            appState.translateX = parseInt(translateMatch[1]) || 0;
+                            appState.translateY = parseInt(translateMatch[2]) || 0;
+                        }
+                    }
+
+                    appState.isDragging = false;
+                    saveState();
+                }
+
+                // Reset pinch state
+                if (appState.isPinching) {
+                    appState.isPinching = false;
+                    saveState();
+                }
+            });
+
+            // Handle touch cancel (e.g., alert dialog appears)
+            document.addEventListener('touchcancel', function() {
+                appState.isDragging = false;
+                appState.isPinching = false;
+            });
+        }
+        document.addEventListener('mousemove', function(e) {
+            if (!appState.isDragging) return;
+
+            e.preventDefault();
+            const x = e.clientX;
+            const y = e.clientY;
+            const dx = x - appState.startX;
+            const dy = y - appState.startY;
+
+            elements.container.scrollLeft = appState.scrollLeftStart - dx;
+            elements.container.scrollTop = appState.scrollTopStart - dy;
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (appState.isDragging) {
+                appState.isDragging = false;
+                elements.container.style.cursor = appState.isCommentMode ? 'crosshair' : 'move';
+
+                // Save scroll position
+                appState.scrollLeft = elements.container.scrollLeft;
+                appState.scrollTop = elements.container.scrollTop;
+                saveState();
+            }
+        });
+
+        // Comment mode toggle
+        elements.commentModeToggle.addEventListener('change', function() {
+            appState.isCommentMode = elements.commentModeToggle.checked;
+            document.querySelectorAll('.svg-container').forEach(container => {
+                container.classList.toggle('comment-mode', appState.isCommentMode);
+                container.style.cursor = appState.isCommentMode ? 'crosshair' : 'move';
+            });
+        });
+
+        // Close comment form
+        elements.commentFormClose.addEventListener('click', function() {
+            elements.commentForm.classList.remove('visible', 'fade-in');
+        });
+
+        // Theme toggle
+        elements.themeToggle.addEventListener('change', toggleDarkMode);
+
+        // Zoom controls
+        document.getElementById('zoom-in').addEventListener('click', function() {
+            applyZoom(appState.zoom + 100);
+        });
+
+        document.getElementById('zoom-out').addEventListener('click', function() {
+            applyZoom(appState.zoom - 100);
+        });
+
+        document.getElementById('reset-zoom').addEventListener('click', function() {
+            initializeContainerState(DEFAULT_ZOOM, true);
+        });
+
+        document.getElementById('max-zoom').addEventListener('click', function() {
+            applyZoom(6000);
+        });
+
+        // Clear all comments
+        elements.clearAllCommentsButton.addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete all comments? This cannot be undone.')) {
+                // Filter comments to delete only those in the current tab
+                appState.comments = appState.comments.filter(c => c.tab !== appState.activeTab);
+                document.querySelectorAll(`#${appState.activeTab}-panel .comment-pin`).forEach(pin => pin.remove());
+                updateCommentCount();
+                saveState();
+            }
+        });
+
+        // Shortcuts panel
+        elements.shortcutsButton.addEventListener('click', function() {
+            elements.shortcutsPanel.classList.add('visible', 'fade-in');
+        });
+
+        elements.shortcutsClose.addEventListener('click', function() {
+            elements.shortcutsPanel.classList.remove('visible', 'fade-in');
+        });
+
+        // Export dialog
+        elements.exportButton.addEventListener('click', function() {
+            elements.exportDialog.classList.add('visible', 'fade-in');
+        });
+
+        elements.exportDialogClose.addEventListener('click', function() {
+            elements.exportDialog.classList.remove('visible', 'fade-in');
+        });
+
+        elements.exportCancel.addEventListener('click', function() {
+            elements.exportDialog.classList.remove('visible', 'fade-in');
+        });
+
+        elements.exportOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                elements.exportOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        elements.exportConfirm.addEventListener('click', function() {
+            const selectedFormat = document.querySelector('.export-option.selected').dataset.format;
+            alert(`Export would be processed in ${selectedFormat} format`);
+            elements.exportDialog.classList.remove('visible', 'fade-in');
+        });
+
+        // Search panel
+        elements.searchButton.addEventListener('click', toggleSearch);
+        elements.searchClose.addEventListener('click', toggleSearch);
+        elements.searchInput.addEventListener('input', function() {
+            // Simple filtering based on input
+            const query = this.value.toLowerCase();
+            const results = document.querySelectorAll('.search-result');
+
+            results.forEach(result => {
+                const title = result.querySelector('.search-result-title').textContent.toLowerCase();
+                const path = result.querySelector('.search-result-path').textContent.toLowerCase();
+
+                result.style.display = (title.includes(query) || path.includes(query)) ? 'block' : 'none';
+            });
+        });
+
+        // Legend toggle
+        elements.showLegend.addEventListener('click', toggleLegend);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ignore if input or textarea is focused
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch(e.key) {
+                case '+':
+                case '=':
+                    applyZoom(appState.zoom + 100);
+                    break;
+                case '-':
+                    applyZoom(appState.zoom - 100);
+                    break;
+                case '0':
+                    initializeContainerState(DEFAULT_ZOOM, true);
+                    break;
+                case '9':
+                    applyZoom(1200);
+                    break;
+                case 'c':
+                case 'C':
+                    elements.commentModeToggle.checked = !elements.commentModeToggle.checked;
+                    elements.commentModeToggle.dispatchEvent(new Event('change'));
+                    break;
+                case 'd':
+                case 'D':
+                    toggleDarkMode();
+                    break;
+                case 's':
+                case 'S':
+                    toggleSearch();
+                    break;
+                case 'e':
+                case 'E':
+                    elements.exportButton.click();
+                    break;
+                case 'l':
+                case 'L':
+                    toggleLegend();
+                    break;
+                // Number keys 1-9 for tab switching (1 and 2 only for now)
+                case '1':
+                    switchTab('overview');
+                    break;
+                case '2':
+                    switchTab('phase1');
+                    break;
+                case 'Escape':
+                    // Close any open panels
+                    elements.shortcutsPanel.classList.remove('visible', 'fade-in');
+                    elements.exportDialog.classList.remove('visible', 'fade-in');
+                    elements.commentForm.classList.remove('visible', 'fade-in');
+                    elements.commentTooltip.classList.remove('visible', 'fade-in');
+
+                    // Exit comment mode
+                    if (appState.isCommentMode) {
+                        elements.commentModeToggle.checked = false;
+                        elements.commentModeToggle.dispatchEvent(new Event('change'));
+                    }
+
+                    if (appState.isSearchActive) {
+                        toggleSearch();
+                    }
+                    break;
+                case '?':
+                    elements.shortcutsButton.click();
+                    break;
+            }
+        });
+
+        // ---- Initialization ----
+
+        // Show loading state
+        showLoading();
+
+        // Load saved state
+        loadState();
+
+        // Setup container listeners for both tabs
+        setupContainerListeners();
+
+        // Setup directional controls
+        setupDirectionalControls();
+
+        // Initialize container with saved or default zoom
+        initializeContainerState(DEFAULT_ZOOM, true);
+
+        // Load existing comments
+        if (appState.comments && appState.comments.length > 0) {
+            updateCommentPinPositions();
+            updateCommentCount();
+        }
+
+        // Add tab number indicators to tab headers
+        elements.tabs.forEach((tab, index) => {
+            const tabNumber = document.createElement('span');
+            tabNumber.className = 'tab-number';
+            tabNumber.style.marginLeft = '5px';
+            tabNumber.style.opacity = '0.7';
+            tabNumber.style.fontSize = '0.8em';
+            tabNumber.textContent = `(${index + 1})`;
+            tab.appendChild(tabNumber);
+        });
+
+        // Wait for all images to load to hide loading state
+        const allImages = document.querySelectorAll('.svg-layer');
+        let loadedImages = 0;
+
+        function checkAllImagesLoaded() {
+            loadedImages++;
+            if (loadedImages >= allImages.length) {
+                hideLoading();
+
+                // Apply dark mode if needed
+                if (appState.isDarkMode) {
+                    allImages.forEach(img => {
+                        if (img.dataset.darkSrc) {
+                            img.src = img.dataset.darkSrc;
+                        }
+                    });
+                }
+
+                // Update zoom/positioning again after image load
+                initializeContainerState(appState.zoom || 500, !appState.scrollLeft && !appState.scrollTop);
+            }
+        }
+
+        allImages.forEach(img => {
+            if (img.complete) {
+                checkAllImagesLoaded();
+            } else {
+                img.onload = checkAllImagesLoaded;
+            }
+        });
+    });
+
+
+
+</script>
+
+</body>
+</html>
